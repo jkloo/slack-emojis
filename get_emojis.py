@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 
-SLACK_URL = 'https://{slack}.slack.com/api/emoji.list?token={token}'
+SLACK_URL = 'https://{slack}.slack.com/api/emoji.list'
 
 
 def download_image(url, path):
@@ -25,7 +25,8 @@ def reconcile_aliases(image_url, emoji):
 
 
 def main(args):
-    r = requests.get(SLACK_URL.format(slack=args.slack, token=args.token))
+    params = {'token': args.token}
+    r = requests.get(SLACK_URL.format(slack=args.slack), params=params)
     if r.status_code == 200:
         emoji = r.json().get('emoji', {})
         if emoji and not os.path.isdir(args.output):
