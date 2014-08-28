@@ -3,10 +3,10 @@
 import os
 import argparse
 import requests
-import urllib
 import logging
 
 logging.basicConfig(level=logging.DEBUG, format='%(message)s')
+
 
 def main(args):
     r = requests.get('https://{slack}.slack.com/api/emoji.list?token={token}'.format(slack=args.slack, token=args.token))
@@ -30,9 +30,6 @@ def main(args):
                 for chunk in r.iter_content():
                     f.write(chunk)
 
-
-    
-    
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
